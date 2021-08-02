@@ -1,10 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import Table from "../Components/table";
 
 const useStyles = makeStyles((theme) => ({
   contextualMenu: {
-    width: 240,
+    width: 290,
     height: 300,
     border: "1px solid lime",
     marginLeft: "24px",
@@ -18,13 +19,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     overflow: "auto",
     flexDirection: "column",
-    height: "50px",
-    width: "160px",
+    // height: "50px",
+    width: "270px",
   },
 }));
 
 const ElementsInfo = (elementProps) => {
-  console.log('ElementsInfo, elementProps: ', elementProps);
+  console.log("ElementsInfo, elementProps: ", elementProps);
   const classes = useStyles();
   return (
     <div
@@ -36,10 +37,11 @@ const ElementsInfo = (elementProps) => {
         right: 34,
       }}
     >
-      <Paper elevation={3} className={classes.paper} style={{ height: 20 }}>
-        <div>element data</div>
+      <Paper elevation={3} className={classes.paper}>
+        <Table />
+        {/* <div>element data</div> */}
       </Paper>
-      <Paper elevation={3} className={classes.paper} style={{ height: 40 }}>
+      {/* <Paper elevation={3} className={classes.paper} style={{ height: 40 }}>
         <div>parameters</div>
       </Paper>
       <Paper elevation={3} className={classes.paper} style={{ height: 20 }}>
@@ -50,7 +52,7 @@ const ElementsInfo = (elementProps) => {
       </Paper>
       <Paper elevation={3} className={classes.paper}>
         <div>...</div>
-      </Paper>
+      </Paper> */}
     </div>
   );
 };

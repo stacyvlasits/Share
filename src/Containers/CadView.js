@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
-import LoginMenu from "../Components/loginMenu";
-import PrimaryButton from "../Components/primaryButton";
 import MenuButton from "../Components/menuButton";
 import ElementsTree from "../Components/elementsTree";
 import ElementsInfo from "../Components/elementInfo";
 import SearchInput from "../Components/searchInput";
-import FolderIcon from "@material-ui/icons/Folder";
-import IconButton from "@material-ui/core/IconButton";
-import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
-import CommentIcon from "@material-ui/icons/Comment";
 import "../App.css";
 import { IfcViewerAPI } from "web-ifc-viewer";
+import BuildrsToolBar from "../Components/toolBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +60,22 @@ const useStyles = makeStyles((theme) => ({
     height: "50px",
     width: "160px",
   },
+  viewerContainer: {
+    position: "absolute",
+    top: "0px",
+    left: "0px",
+    textAlign: "center",
+    color: "blue",
+    width: "100vw",
+    height: "100vh",
+    margin: "auto",
+  },
+  proptyViewerContainer: {
+    position: "absolute",
+    top: "100px",
+    right: "50px",
+    width: "400px",
+  },
 }));
 
 const CadView = () => {
@@ -84,17 +93,16 @@ const CadView = () => {
     setOpenShare(!openShare);
   };
 
-
-  const onElementSelect = expressID => {
+  const onElementSelect = (expressID) => {
     try {
-      console.log('Using IfcViewerAPI: ', viewer);
+      console.log("Using IfcViewerAPI: ", viewer);
       viewer.IFC.pickIfcItemsByID(0, [expressID]);
       const props = viewer.IFC.getItemProperties(0, expressID);
       setSelectedElement(props);
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
@@ -114,14 +122,15 @@ const CadView = () => {
   }, []);
 
   const fileOpen = () => {
-    const loadIfc = async event => {
+    console.log("file open is fired");
+    const loadIfc = async (event) => {
       await viewer.loadIfc(event.target.files[0], true);
       try {
         // v1.0.14
         //const ifcRoot = viewer.ifcManager.loader.getSpatialStructure(0);
         // v1.0.20
         const ifcRoot = viewer.IFC.loader.ifcManager.getSpatialStructure(0);
-        console.log('setIfcElement to ifcRoot: ', ifcRoot);
+        console.log("setIfcElement to ifcRoot: ", ifcRoot);
         setIfcElement(ifcRoot);
       } catch (e) {
         console.error(e);
@@ -136,126 +145,27 @@ const CadView = () => {
     fileInput.classList.add("hidden");
     fileInput.addEventListener(
       "change",
-      event => {
+      (event) => {
         loadIfc(event);
       },
       false
     );
     viewerContainer.appendChild(fileInput);
     fileInput.click();
-  }
+  };
 
   return (
     <div>
       <div style={{ zIndex: 0 }}>
-        <div
-          id="viewer-container"
-          style={{
-            position: "absolute",
-            top: "0px",
-            left: "0px",
-            textAlign: "center",
-            color: "blue",
-            width: "100vw",
-            height: "100vh",
-            margin: "auto",
-          }}
-        ></div>
+        <div id="viewer-container" className={classes.viewerContainer}></div>
       </div>
       <div
         id="property-viewer-container"
-        style={{
-          position: 'absolute',
-          top: '100px',
-          right: '50px',
-          width: '400px',
-        }}
+        className={classes.propertyViewerContainer}
       ></div>
       <div index={{ zIndex: 100 }}>
         <AppBar elevation={0} position="static" color="primary">
-          <Toolbar
-            variant="regular"
-            style={{
-              borderBottom: "1px solid 	#585858",
-              backgroundColor: "#787878",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
-              <Typography
-                variant="h6"
-                className={classes.title}
-                onClick={() => {
-                  history.push("/cards");
-                }}
-              >
-                BUILDRS
-              </Typography>
-              {/*
-              <IconButton
-                edge="start"
-                color="secondary"
-                aria-label="menu"
-                style={{ position: "relative" }}
-              >
-                <FolderIcon
-                  style={{
-                    width: 30,
-                    height: 30,
-                    color: "whiteSmoke",
-                  }}
-                />
-                </IconButton>*/}
-              <IconButton
-                edge="start"
-                color="secondary"
-                aria-label="menu"
-                style={{ position: "relative" }}
-                onClick={fileOpen}
-              >
-                <OpenInBrowserIcon
-                  style={{
-                    width: 30,
-                    height: 30,
-                    color: "whiteSmoke",
-                  }}
-                />
-              </IconButton>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
-              <IconButton
-                edge="start"
-                color="secondary"
-                aria-label="menu"
-                style={{ position: "relative", right: 10 }}
-              >
-                <CommentIcon
-                  style={{
-                    width: 30,
-                    height: 30,
-                    color: "whiteSmoke",
-                  }}
-                />
-              </IconButton>
-              <PrimaryButton name={"Share"} onClick={onClickShare} />
-              <LoginMenu />
-            </div>
-          </Toolbar>
+          <BuildrsToolBar fileOpen={fileOpen} onClickShare={onClickShare} />
         </AppBar>
         <div className={classes.searchContainer}>
           <SearchInput onClickMenu={() => setOpenLeft(!openLeft)} />
@@ -266,22 +176,22 @@ const CadView = () => {
           </div>
         )}
         <div className={classes.menuToolbarContainer}>
-          {/* <MenuButton onClick={() => setOpenLeft(!openLeft)} /> */}
           <MenuButton onClick={() => setOpenRight(!openRight)} />
         </div>
         <div className={classes.menuToolbarContainer}>
-          <div>{
-            openLeft ? (
-              <ElementsTree id="elements-tree" ifcElement={ifcElement} onElementSelect={onElementSelect} />
-            ) : null
-          }
+          <div>
+            {openLeft ? (
+              <ElementsTree
+                id="elements-tree"
+                ifcElement={ifcElement}
+                onElementSelect={onElementSelect}
+              />
+            ) : null}
           </div>
-          <div>{
-            openRight ? (
-              <ElementsInfo elementProps={selectedElement} />
-            ) : null
-          }
+          <div>
+            {openRight ? <ElementsInfo elementProps={selectedElement} /> : null}
           </div>
+          <div style={{ position: "absolute", top: 100, right: 100 }}></div>
         </div>
       </div>
     </div>
