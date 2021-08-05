@@ -44,16 +44,17 @@ const Info = (elementProps) => {
   return (
     <table>
       <tbody>
-        {Object.keys(elementProps).map((key) => (
-          <Row
-            firstColumn={key}
-            secondColumn={JSON.stringify(elementProps[key])}
-          />
-          // <tr key={serial++}>
-          //   <td>{key}</td>
-          //   <td>{JSON.stringify(elementProps[key])}</td>
-          // </tr>
-        ))}
+        {Object.keys(elementProps).map((key) => {
+          console.log("key", key);
+          if (JSON.stringify(elementProps[key])) {
+            return (
+              <Row
+                firstColumn={key}
+                secondColumn={JSON.stringify(elementProps[key])}
+              />
+            );
+          }
+        })}
       </tbody>
       <Row />
     </table>
