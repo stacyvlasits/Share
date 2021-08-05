@@ -12,9 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   menuButtonDisabled: {
-    "@media (max-width: 1280px)": {
-      // border: "2px solid lime",
-    },
+    "@media (max-width: 1280px)": {},
   },
 }));
 

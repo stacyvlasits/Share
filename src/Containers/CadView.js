@@ -9,26 +9,22 @@ import { IfcViewerAPI } from "web-ifc-viewer";
 import BuildrsToolBar from "../Components/toolBar";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    ...theme.typography.button,
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(1),
-    flexGrow: 1,
-  },
   menuToolbarContainer: {
     width: "100%",
     display: "flex",
     justifyContent: "flex-end",
     marginTop: "10px",
-
+    display: "flex",
+    flexDirection: "row",
     "@media (max-width: 1280px)": {
       marginTop: "40px",
+      justifyContent: "flex-start",
     },
   },
   elementsButton: {
     position: "absolute",
     top: 80,
-    right: 10,
+    right: 22,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
@@ -39,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
       right: 15,
     },
   },
-
   title: {
     flexGrow: 1,
     color: "WhiteSmoke",
@@ -68,6 +63,12 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     left: 20,
     top: 84,
+    width: "100%",
+    "@media (max-width: 1280px)": {
+      justifyContent: "center",
+      alignItems: "center",
+      left: 0,
+    },
   },
   paper: {
     padding: theme.spacing(2),
@@ -86,6 +87,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100vw",
     height: "100vh",
     margin: "auto",
+    // display: "none",
+    zIndex: 0,
   },
   propertyViewContainer: {
     position: "absolute",
@@ -158,52 +161,39 @@ const CadView = () => {
   console.log("props", Object.keys(elementProps).length);
   return (
     <div>
-      <div style={{ zIndex: 0 }}>
-        <div className={classes.viewContainer} id="viewer-container"></div>
+      <div className={classes.viewContainer} id="viewer-container"></div>
+      {/* <div style={{ zIndex: 100 }}> */}
+      <BuildrsToolBar fileOpen={fileOpen} onClickShare={onClickShare} />
+      <div className={classes.searchContainer}>
+        <SearchInput
+          onClickMenu={() => setOpenLeft(!openLeft)}
+          disabled={Object.keys(ifcElement).length === 0}
+        />
       </div>
-      <div
-        id="property-viewer-container"
-        className={classes.propertyViewContainer}
-      ></div>
-      <div index={{ zIndex: 100 }}>
-        <BuildrsToolBar fileOpen={fileOpen} onClickShare={onClickShare} />
-        <div className={classes.searchContainer}>
-          <SearchInput
-            onClickMenu={() => setOpenLeft(!openLeft)}
-            disabled={Object.keys(ifcElement).length === 0}
-          />
-        </div>
-        {openShare && (
-          <div className={classes.shareContainer}>
-            http://wwww.builders.com/kdjiui4kjh/dflakdjkfjlh
-          </div>
-        )}
-        <div className={classes.elementsButton}>
-          <MenuButton
-            onClick={() => setOpenRight(!openRight)}
-            disabled={Object.keys(elementProps).length === 0}
-            open={openRight}
-          />
-        </div>
+      <div className={classes.elementsButton}>
+        <MenuButton
+          onClick={() => setOpenRight(!openRight)}
+          disabled={Object.keys(elementProps).length === 0}
+          open={openRight}
+        />
+      </div>
 
-        {/* </div> */}
-        <div className={classes.menuToolbarContainer}>
-          <div>
-            {openLeft ? (
-              <ElementsTree
-                viewer={viewer}
-                ifcElement={ifcElement}
-                onElementSelect={onElementSelect}
-                elementProps={elementProps}
-              />
-            ) : null}
-          </div>
-          <div>
-            {openRight ? <ElementsInfo elementProps={elementProps} /> : null}
-          </div>
+      <div>hello</div>
+
+      {openLeft ? (
+        <div>
+          <ElementsTree
+            viewer={viewer}
+            ifcElement={ifcElement}
+            onElementSelect={onElementSelect}
+            elementProps={elementProps}
+          />
         </div>
-      </div>
+      ) : null}
+
+      {/* {openRight ? <ElementsInfo elementProps={elementProps} /> : null} */}
     </div>
+    // </div>
   );
 };
 
