@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
     marginTop: "10px",
-    border: "1px solid red",
+
     "@media (max-width: 1280px)": {
       marginTop: "40px",
     },
@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
       right: 15,
     },
   },
+
   title: {
     flexGrow: 1,
     color: "WhiteSmoke",
@@ -153,7 +154,8 @@ const CadView = () => {
     viewerContainer.appendChild(fileInput);
     fileInput.click();
   };
-
+  console.log("ifc elements", ifcElement);
+  console.log("props", Object.keys(elementProps).length);
   return (
     <div>
       <div style={{ zIndex: 0 }}>
@@ -166,7 +168,10 @@ const CadView = () => {
       <div index={{ zIndex: 100 }}>
         <BuildrsToolBar fileOpen={fileOpen} onClickShare={onClickShare} />
         <div className={classes.searchContainer}>
-          <SearchInput onClickMenu={() => setOpenLeft(!openLeft)} />
+          <SearchInput
+            onClickMenu={() => setOpenLeft(!openLeft)}
+            disabled={Object.keys(ifcElement).length === 0}
+          />
         </div>
         {openShare && (
           <div className={classes.shareContainer}>
@@ -174,7 +179,11 @@ const CadView = () => {
           </div>
         )}
         <div className={classes.elementsButton}>
-          <MenuButton onClick={() => setOpenRight(!openRight)} />
+          <MenuButton
+            onClick={() => setOpenRight(!openRight)}
+            disabled={Object.keys(elementProps).length === 0}
+            open={openRight}
+          />
         </div>
 
         {/* </div> */}
