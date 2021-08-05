@@ -7,6 +7,7 @@ import SearchInput from "../Components/searchInput";
 import "../App.css";
 import { IfcViewerAPI } from "web-ifc-viewer";
 import BuildrsToolBar from "../Components/toolBar";
+import { Info } from "../Components/info";
 
 const useStyles = makeStyles((theme) => ({
   menuToolbarContainer: {
@@ -162,7 +163,6 @@ const CadView = () => {
   return (
     <div>
       <div className={classes.viewContainer} id="viewer-container"></div>
-      {/* <div style={{ zIndex: 100 }}> */}
       <BuildrsToolBar fileOpen={fileOpen} onClickShare={onClickShare} />
       <div className={classes.searchContainer}>
         <SearchInput
@@ -178,8 +178,6 @@ const CadView = () => {
         />
       </div>
 
-      <div>hello</div>
-
       {openLeft ? (
         <div>
           <ElementsTree
@@ -190,10 +188,21 @@ const CadView = () => {
           />
         </div>
       ) : null}
-
-      {/* {openRight ? <ElementsInfo elementProps={elementProps} /> : null} */}
+      {openRight ? (
+        <div
+          style={{
+            position: "absolute",
+            top: 140,
+            right: 50,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Info elementProps={elementProps} />
+        </div>
+      ) : null}
     </div>
-    // </div>
   );
 };
 
