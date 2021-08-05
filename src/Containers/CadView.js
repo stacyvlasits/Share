@@ -94,10 +94,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const CadView = () => {
   const classes = useStyles();
-  const history = useHistory();
   const [openLeft, setOpenLeft] = useState(false);
   const [openRight, setOpenRight] = useState(false);
   const [openShare, setOpenShare] = useState(false);
@@ -109,14 +107,12 @@ const CadView = () => {
     setOpenShare(!openShare);
   };
 
-
-  const onElementSelect = expressID => {
+  const onElementSelect = (expressID) => {
     viewer.pickIfcItemsByID(0, [expressID]);
     const props = viewer.getProperties(0, expressID);
     setElementProps(props);
     setOpenRight(true);
   };
-
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
@@ -134,7 +130,6 @@ const CadView = () => {
       viewer.removeClippingPlane();
     };
   }, []);
-
 
   const fileOpen = () => {
     const loadIfc = async (event) => {
@@ -159,7 +154,6 @@ const CadView = () => {
     fileInput.click();
   };
 
-  
   return (
     <div>
       <div style={{ zIndex: 0 }}>
@@ -185,14 +179,14 @@ const CadView = () => {
 
         {/* </div> */}
         <div className={classes.menuToolbarContainer}>
-          <div>{
-            openLeft ? (
+          <div>
+            {openLeft ? (
               <ElementsTree
-                viewer = {viewer}
-                ifcElement = {ifcElement}
-                onElementSelect = {onElementSelect} />
-            ) : null
-          }
+                viewer={viewer}
+                ifcElement={ifcElement}
+                onElementSelect={onElementSelect}
+              />
+            ) : null}
           </div>
           <div>
             {openRight ? <ElementsInfo elementProps={elementProps} /> : null}
