@@ -185,6 +185,7 @@ const CadView = () => {
                 viewer={viewer}
                 ifcElement={ifcElement}
                 onElementSelect={onElementSelect}
+                elementProps={elementProps}
               />
             ) : null}
           </div>

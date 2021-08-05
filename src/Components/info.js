@@ -45,7 +45,6 @@ const Info = (elementProps) => {
     <table>
       <tbody>
         {Object.keys(elementProps).map((key) => {
-          console.log("key", key);
           if (JSON.stringify(elementProps[key])) {
             return (
               <Row
