@@ -16,7 +16,7 @@ const Row = ({ firstColumn, secondColumn }) => {
       style={{
         display: "flex",
         flexDirection: "row",
-        width: 500,
+        width: 300,
         justifyContent: "flex-start",
         fontSize: 12,
         marginBottom: 5,
@@ -31,7 +31,13 @@ const Row = ({ firstColumn, secondColumn }) => {
       >
         {firstColumn}
       </div>
-      <div style={{ minWidth: 300, border: "1px solid lightGray" }}>
+      <div
+        style={{
+          minWidth: 200,
+          border: "1px solid lightGray",
+          wordWrap: "break-word",
+        }}
+      >
         {secondColumn}
       </div>
     </div>

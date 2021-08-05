@@ -90,7 +90,7 @@ const ElementsTreeStructure = ({
     return ifcElement.type === "IFCPROJECT"
       ? {
           position: "absolute",
-          top: 0,
+          top: 60,
           left: 10,
         }
       : {};
