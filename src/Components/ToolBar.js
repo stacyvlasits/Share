@@ -6,10 +6,10 @@ import IconButton from '@material-ui/core/IconButton';
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 import CommentIcon from '@material-ui/icons/Comment';
 import { makeStyles } from '@material-ui/core/styles';
+import GitRepoIcon from './gitRepoIcon';
 
 import PrimaryButton from '../Components/primaryButton';
 import LoginMenu from './LoginMenu';
-
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '20px',
   },
 }));
-
 
 const ToolBar = ({ fileOpen, onClickShare }) => {
   const classes = useStyles();
@@ -61,6 +60,20 @@ const ToolBar = ({ fileOpen, onClickShare }) => {
               }}
             />
           </IconButton>
+          <IconButton
+            edge='start'
+            color='secondary'
+            aria-label='menu'
+            style={{ position: 'relative' }}
+            onClick={fileOpen}
+            style={{
+              width: 50,
+              height: 50,
+              color: 'whiteSmoke',
+            }}
+          >
+            <GitRepoIcon />
+          </IconButton>
         </div>
         <div
           style={{
@@ -89,6 +102,7 @@ const ToolBar = ({ fileOpen, onClickShare }) => {
               }}
             />
           </IconButton>
+
           <PrimaryButton name={'Share'} onClick={onClickShare} />
           <LoginMenu />
         </div>
@@ -96,6 +110,5 @@ const ToolBar = ({ fileOpen, onClickShare }) => {
     </AppBar>
   );
 };
-
 
 export default ToolBar;

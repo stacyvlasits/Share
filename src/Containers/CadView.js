@@ -11,7 +11,6 @@ import ToolBar from '../Components/ToolBar';
 
 import '../App.css';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     ...theme.typography.button,
@@ -110,9 +109,10 @@ const CadView = () => {
     setOpenShare(!openShare);
   };
 
-  const onElementSelect = elt => {
+  const onElementSelect = (elt) => {
     const id = elt.expressID;
-    if (id === undefined) throw new Error('Selected element is missing Express ID');
+    if (id === undefined)
+      throw new Error('Selected element is missing Express ID');
     try {
       viewer.pickIfcItemsByID(0, [id]);
     } catch (e) {
@@ -203,19 +203,16 @@ const CadView = () => {
           <div>
             {openLeft ? (
               <NavPanel
-                viewer = {viewer}
-                element = {rootElement}
-                onElementSelect = {onElementSelect} />
-            ) : null
-          }
+                viewer={viewer}
+                element={rootElement}
+                onElementSelect={onElementSelect}
+              />
+            ) : null}
           </div>
-          <div>{
-            openRight ? (
-              <ItemPanel
-                viewer = {viewer}
-                element = {selectedElement} />
-            ) : null
-          }
+          <div>
+            {openRight ? (
+              <ItemPanel viewer={viewer} element={selectedElement} />
+            ) : null}
           </div>
         </div>
       </div>
