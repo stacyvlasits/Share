@@ -31,8 +31,21 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchBar({ onClickMenu, disabled, open }) {
   const classes = useStyles();
 
+
+  const onChange = e => {
+    //console.log('SearchBar#onChange: ', e);
+  };
+
+
+  const onSubmit = e => {
+    e.preventDefault();
+    console.log('SearchBar#onSubmit: ', e);
+    return false;
+  };
+
+
   return (
-    <Paper component='form' className={classes.root}>
+    <Paper component='form' className={classes.root} onSubmit={onSubmit}>
       <IconButton
         className={classes.iconButton}
         aria-label='menu'
@@ -46,6 +59,7 @@ export default function SearchBar({ onClickMenu, disabled, open }) {
         className={classes.input}
         placeholder='Search IFC'
         inputProps={{ 'aria-label': 'search google maps' }}
+        onChange = {onChange}
       />
       <IconButton
         type='submit'
@@ -62,6 +76,6 @@ export default function SearchBar({ onClickMenu, disabled, open }) {
       >
         <DirectionsIcon />
       </IconButton> */}
-    </Paper>
+      </Paper>
   );
 }
